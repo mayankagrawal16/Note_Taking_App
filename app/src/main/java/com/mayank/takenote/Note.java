@@ -1,13 +1,12 @@
 package com.mayank.takenote;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "note_table")
+@Entity(tableName = "Note_table")
 public class Note {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int id;
     public String title;
     public String description;
@@ -15,10 +14,6 @@ public class Note {
     public Note(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getId() {
@@ -31,5 +26,9 @@ public class Note {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

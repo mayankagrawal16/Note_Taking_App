@@ -10,10 +10,9 @@ import java.util.concurrent.Executors;
 
 public class NoteRepository {
 
-    // defining executors in place of Async
-    ExecutorService executors= Executors.newSingleThreadExecutor();
     private NoteDao noteDao;
-    private LiveData<List<Note>>notes;
+    LiveData<List<Note>>notes;
+    ExecutorService executorService= Executors.newSingleThreadExecutor();
 
     public NoteRepository(Application application)
     {
@@ -21,32 +20,30 @@ public class NoteRepository {
         noteDao=noteDatabase.noteDao();
         notes=noteDao.getAllNotes();
     }
-
     public void insert(Note note)
     {
-        executors.execute(new Runnable() {
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
                 noteDao.insert(note);
             }
         });
     }
-    public void delete(Note note)
-    {
-
-        executors.execute(new Runnable() {
-            @Override
-            public void run() {
-                noteDao.delete(note);
-            }
-        });
-    }
     public void update(Note note)
     {
-        executors.execute(new Runnable() {
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
                 noteDao.update(note);
+            }
+        });
+    }
+    public void delete(Note note)
+    {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                noteDao.delete(note);
             }
         });
     }
@@ -54,5 +51,4 @@ public class NoteRepository {
     {
         return notes;
     }
-
 }

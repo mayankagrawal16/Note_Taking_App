@@ -10,15 +10,16 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface NoteDao{
+public interface NoteDao {
 
     @Insert
     void insert(Note note);
+
     @Delete
     void delete(Note note);
     @Update
     void update(Note note);
-
     @Query("select * from note_table order by id asc")
     LiveData<List<Note>>getAllNotes();
+
 }
